@@ -1,15 +1,11 @@
 <template>
-  <div>Login</div>
-  <el-button-group>
-    <el-button type="primary" :icon="ArrowLeft">Previous Page</el-button>
-    <el-button type="primary">
-      Next Page<el-icon class="el-icon--right"><ArrowRight /></el-icon>
-    </el-button>
-  </el-button-group>
+  <div class="login">
+    <loginPanel></loginPanel>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
+import loginPanel from './cpns/login-panel.vue'
 import hyRequest from '@/services'
 
 hyRequest
@@ -21,4 +17,13 @@ hyRequest
   })
 </script>
 
-<style scoped></style>
+<style scoped>
+.login {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('@/assets/img/login-bg.svg');
+}
+</style>
