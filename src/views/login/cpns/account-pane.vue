@@ -23,6 +23,8 @@
 import { reactive, ref } from 'vue'
 import type { ElForm, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+
+import useLoginStore from '@/stores/login/login'
 // 1.定义账户登陆的数据
 const accountForm = reactive({
   account: '',
@@ -50,18 +52,35 @@ const accountRules: FormRules = {
     },
     {
       pattern: /^[a-z0-9]{6,}$/,
-      message: '密码为6位以上数字字母组成，且第一位位大写字母',
+      message: '密码为6位以上数字字母组成',
       trigger: 'blur'
     }
   ]
 }
 
 // 3.登陆逻辑
+const loginStore = useLoginStore()
 const accountFormRef = ref<InstanceType<typeof ElForm>>() //获取表单
 
 function loginAction() {
-  accountFormRef.value?.validate(() => {})
-  console.log(accountForm.account, accountForm.pwd)
+  accountFormRef.value?.validate((isValid, inValidFields) => {
+    if (isValid) {
+      // 输入合法，获取用户输入的账号与密码
+      const name = accountForm.account
+      const password = accountForm.pwd
+      // 向服务器发送请求，携带账号与密码
+      loginStore.loginAccountAction({ name, password })
+    } else {
+      console.log('验证失败')
+      console.log(inValidFields)
+      ElMessage({
+        showClose: true,
+        message: '密码与账号错误，请检查账号与密码重新登陆~',
+        type: 'error',
+        duration: 2000
+      }) //需要配置导入样式
+    }
+  })
 }
 
 defineExpose({

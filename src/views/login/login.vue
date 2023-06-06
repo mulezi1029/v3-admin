@@ -6,15 +6,6 @@
 
 <script setup lang="ts">
 import loginPanel from './cpns/login-panel.vue'
-import hyRequest from '@/services'
-
-hyRequest
-  .get({
-    url: '/home/multidata'
-  })
-  .then((res) => {
-    console.log(res)
-  })
 </script>
 
 <style scoped>
