@@ -26,11 +26,15 @@ import { ElMessage } from 'element-plus'
 
 import type { IAccount } from '@/types/login'
 import useLoginStore from '@/stores/login/login'
+import { localCache } from '@/utils/cache'
+
+const CACHE_ACCOUNT = 'account'
+const CACHE_PWD = 'password'
 
 // 1.定义账户登陆的数据
 const accountForm = reactive<IAccount>({
-  account: '',
-  password: ''
+  account: localCache.getCache(CACHE_ACCOUNT) ?? '',
+  password: localCache.getCache(CACHE_PWD) ?? ''
 })
 // 2.定义账户登陆校验规则
 const accountRules: FormRules = {
@@ -64,16 +68,25 @@ const accountRules: FormRules = {
 const loginStore = useLoginStore()
 const accountFormRef = ref<InstanceType<typeof ElForm>>() //获取表单
 
-const loginAction = () => {
+const loginAction = (isRememberPwd: boolean) => {
   // 验证输入的账号密码格式是否合法
   accountFormRef.value?.validate((isValid) => {
     if (isValid) {
-      // 输入合法，获取用户输入的账号与密码
+      //1. 输入合法，获取用户输入的账号与密码
       const name = accountForm.account
       const password = accountForm.password
 
-      // 向服务器发送请求，携带账号与密码
-      loginStore.loginAccountAction({ name, password })
+      //2. 向服务器发送请求，携带账号与密码
+      loginStore.loginAccountAction({ name, password }).then((res) => {
+        // 3.判断是否记住密码
+        if (isRememberPwd) {
+          localCache.setCatche(CACHE_ACCOUNT, name)
+          localCache.setCatche(CACHE_PWD, password)
+        } else {
+          localCache.removeCache(CACHE_ACCOUNT)
+          localCache.removeCache(CACHE_PWD)
+        }
+      })
     } else {
       ElMessage({
         showClose: true,

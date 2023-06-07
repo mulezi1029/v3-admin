@@ -27,7 +27,7 @@ const router = createRouter({
   ]
 })
 
-// 路由导航守卫
+// 路由导航守卫：路由跳转前进行判断是否已经登陆：本地是否已有token
 router.beforeEach((to) => {
   return isLogin(to)
 })

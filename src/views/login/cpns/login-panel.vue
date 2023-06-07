@@ -30,7 +30,7 @@
     </div>
     <!-- 密码控制 -->
     <div class="account-control">
-      <el-checkbox v-model="isRemember" label="记住密码" size="large" />
+      <el-checkbox v-model="isRememberPwd" label="记住密码" size="large" />
       <el-link type="primary" :underline="false">忘记密码</el-link>
     </div>
     <!-- 登陆按钮:点击实现登陆逻辑：调用对应登陆组件中的方法 -->
@@ -39,18 +39,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AccountPane from './account-pane.vue'
 import PhonePane from './phone-pane.vue'
+import { localCache } from '@/utils/cache'
 
 const activeTab = ref('account')
-const isRemember = ref(true)
+
+const isRememberPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+
+watch(isRememberPwd, (newVal) => {
+  console.log(newVal)
+  localCache.setCatche('isRemPwd', newVal)
+})
 
 // 点击按钮登陆逻辑
 const accountRef = ref<InstanceType<typeof AccountPane>>() //获取子组件实例
 const handleLoginBtn = () => {
   if (activeTab.value === 'account') {
-    accountRef.value?.loginAction() //调用子组件方法
+    accountRef.value?.loginAction(isRememberPwd.value) //调用子组件方法
   } else {
     console.log('phone登陆')
   }
