@@ -33,7 +33,7 @@
       <el-checkbox v-model="isRemember" label="记住密码" size="large" />
       <el-link type="primary" :underline="false">忘记密码</el-link>
     </div>
-    <!-- 登陆按钮 -->
+    <!-- 登陆按钮:点击实现登陆逻辑：调用对应登陆组件中的方法 -->
     <el-button class="login-btn" type="primary" @click="handleLoginBtn">立即登陆</el-button>
   </div>
 </template>
