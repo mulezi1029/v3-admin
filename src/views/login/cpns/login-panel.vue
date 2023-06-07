@@ -30,7 +30,7 @@
     </div>
     <!-- 密码控制 -->
     <div class="account-control">
-      <el-checkbox v-model="isRememberPwd" label="记住密码" size="large" />
+      <el-checkbox v-model="isRememberPwd" label="记住密码" size="large" @change="handleRemClick" />
       <el-link type="primary" :underline="false">忘记密码</el-link>
     </div>
     <!-- 登陆按钮:点击实现登陆逻辑：调用对应登陆组件中的方法 -->
@@ -47,11 +47,13 @@ import { localCache } from '@/utils/cache'
 const activeTab = ref('account')
 
 const isRememberPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+const handleRemClick = () => {
+  localCache.setCatche('isRemPwd', isRememberPwd.value)
+}
 
-watch(isRememberPwd, (newVal) => {
-  console.log(newVal)
-  localCache.setCatche('isRemPwd', newVal)
-})
+// watch(isRememberPwd, (newVal) => {
+//   localCache.setCatche('isRemPwd', newVal)
+// })
 
 // 点击按钮登陆逻辑
 const accountRef = ref<InstanceType<typeof AccountPane>>() //获取子组件实例

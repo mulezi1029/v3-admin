@@ -20,6 +20,11 @@ const router = createRouter({
       component: import('@/views/main/main.vue')
     },
     {
+      path: '/text',
+      name: 'text',
+      component: import('@/views/text/test.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: import('@/views/error/notFound.vue')
