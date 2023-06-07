@@ -3,11 +3,12 @@ import { defineStore } from 'pinia'
 import { loginAccount } from '@/services/login/login'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
+import { LOGIN_TOKEN } from '@/global/constants'
 
 const useLoginStore = defineStore('login', {
   state: () => ({
     id: '',
-    token: localStorage.getItem('token') ?? '',
+    token: localStorage.getItem(LOGIN_TOKEN) ?? '',
     name: ''
   }),
 
@@ -21,7 +22,7 @@ const useLoginStore = defineStore('login', {
       this.name = loginData.data.name
 
       // 2.本地缓存token
-      localCache.setCatche('token', this.token)
+      localCache.setCatche(LOGIN_TOKEN, this.token)
 
       // 3.登陆成功进行路由跳转
       router.push('/main')

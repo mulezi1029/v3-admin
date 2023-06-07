@@ -3,6 +3,7 @@
  *
  */
 
+//枚举缓存类型
 enum CacheType {
   Local,
   Session

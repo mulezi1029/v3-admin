@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { isLogin } from '@/global/isLogin'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,9 +22,13 @@ const router = createRouter({
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
-      component: import('@/views/error/notfound.vue')
+      component: import('@/views/error/notFound.vue')
     }
   ]
 })
 
+// 路由导航守卫
+router.beforeEach((to) => {
+  return isLogin(to)
+})
 export default router
