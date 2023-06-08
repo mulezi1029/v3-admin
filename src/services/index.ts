@@ -8,7 +8,10 @@ const hyRequest = new HYRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestSuccessFn: (config) => {
-      config.headers!.Authorization = 'Bearer' + localCache.getCache(LOGIN_TOKEN)
+      const token = localCache.getCache(LOGIN_TOKEN)
+      if (config.headers && token) {
+        config.headers.Authorization = 'Bearer ' + token
+      }
       return config
     }
   }
