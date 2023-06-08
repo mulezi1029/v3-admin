@@ -47,10 +47,13 @@ import { localCache } from '@/utils/cache'
 const activeTab = ref('account')
 
 const isRememberPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+
+// 法一：
 const handleRemClick = () => {
   localCache.setCatche('isRemPwd', isRememberPwd.value)
 }
 
+// 法二：
 // watch(isRememberPwd, (newVal) => {
 //   localCache.setCatche('isRemPwd', newVal)
 // })

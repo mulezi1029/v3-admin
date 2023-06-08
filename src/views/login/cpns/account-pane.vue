@@ -77,7 +77,7 @@ const loginAction = (isRememberPwd: boolean) => {
       const password = accountForm.password
 
       //2. 向服务器发送请求，携带账号与密码
-      loginStore.loginAccountAction({ name, password }).then((res) => {
+      loginStore.loginAccountAction({ name, password }).then(() => {
         // 3.判断是否记住密码
         if (isRememberPwd) {
           localCache.setCatche(CACHE_ACCOUNT, name)

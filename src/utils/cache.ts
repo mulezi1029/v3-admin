@@ -18,7 +18,7 @@ class Cache {
 
   setCatche(key: string, value: any) {
     if (value !== undefined) {
-      console.log(value)
+      // console.log(value)
       this.storage.setItem(key, JSON.stringify(value))
     }
   }
