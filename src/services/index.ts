@@ -8,6 +8,7 @@ const hyRequest = new HYRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestSuccessFn: (config) => {
+      // 请求拦截器，每个请求携带token
       const token = localCache.getCache(LOGIN_TOKEN)
       if (config.headers && token) {
         config.headers.Authorization = 'Bearer ' + token

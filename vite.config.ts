@@ -14,6 +14,7 @@ import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-i
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    hmr: true,
     port: 8080,
     open: '/login',
     cors: true //开发服务器下允许跨域
