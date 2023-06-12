@@ -2,13 +2,15 @@
   <div class="main">
     <!-- <el-button type="warning" @click="handleLogOut">退出登陆</el-button> -->
     <el-container class="main-content">
-      <!-- 侧边栏 -->
-      <el-aside width="200px" class="el-aside">Aside</el-aside>
-      <!-- 内容 -->
+      <el-aside width="220px" class="el-aside">
+        <mian-menu></mian-menu>
+      </el-aside>
+
       <el-container>
-        <!-- 头部 -->
-        <el-header class="el-header">Header</el-header>
-        <!-- 主体 -->
+        <el-header class="el-header">
+          <mian-header></mian-header>
+        </el-header>
+
         <el-main class="el-main">Main</el-main>
       </el-container>
     </el-container>
@@ -34,9 +36,6 @@ const handleLogOut = () => {
   height: 100%;
   .main-content {
     height: 100%;
-    .el-aside {
-      background-color: aqua;
-    }
     .el-header {
       background-color: aquamarine;
     }
