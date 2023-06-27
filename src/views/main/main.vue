@@ -1,14 +1,14 @@
 <template>
   <div class="main">
-    <!-- <el-button type="warning" @click="handleLogOut">退出登陆</el-button> -->
     <el-container class="main-content">
-      <el-aside width="220px" class="el-aside">
-        <mian-menu></mian-menu>
+      <!-- 菜单侧边栏 -->
+      <el-aside :width="isFold ? '64px' : '210px'" class="el-aside">
+        <mian-menu :collapse="isFold"></mian-menu>
       </el-aside>
 
       <el-container>
         <el-header class="el-header">
-          <mian-header></mian-header>
+          <mian-header @fold-change="handleFoldChange"></mian-header>
         </el-header>
 
         <el-main class="el-main">Main</el-main>
@@ -18,16 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/global/constants'
-import { localCache } from '@/utils/cache'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
-const router = useRouter()
-
-// 退出登陆逻辑
-const handleLogOut = () => {
-  localCache.removeCache(LOGIN_TOKEN)
-  router.push('/login')
+const isFold = ref(false)
+const handleFoldChange = (flag: boolean) => {
+  isFold.value = flag
 }
 </script>
 
@@ -36,8 +31,20 @@ const handleLogOut = () => {
   height: 100%;
   .main-content {
     height: 100%;
+    .el-aside {
+      overflow-x: hidden;
+      overflow-y: auto;
+      text-align: left;
+      scrollbar-width: none;
+      transition: width 0.3s ease;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
     .el-header {
-      background-color: aquamarine;
+      display: flex;
+      padding: 0 5px;
+      // background-color: aquamarine;
     }
     .el-main {
       background-color: bisque;

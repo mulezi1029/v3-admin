@@ -1,16 +1,16 @@
 <template>
   <div class="main-menu">
-    <!-- logo -->
+    <!-- logo与标题 -->
     <div class="logo">
       <img src="@/assets/img/logo.svg" alt="" />
-      <h2 class="title">后台管理系统</h2>
+      <h2 class="title" v-show="!collapse">后台管理系统</h2>
     </div>
 
     <!-- 菜单 -->
     <div class="menu">
       <el-menu
         :default-active="userMenus[0].children[0].id"
-        :collapse="false"
+        :collapse="collapse"
         background-color="#001529"
         text-color="#b7bdc3"
         active-text-color="#fff"
@@ -80,6 +80,13 @@
 <script setup lang="ts">
 import useLoginStore from '@/stores/login/login'
 
+defineProps({
+  collapse: {
+    type: Boolean,
+    required: true
+  }
+})
+
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
 </script>
@@ -90,8 +97,13 @@ const userMenus = loginStore.userMenus
   background-color: #001529;
   .logo {
     display: flex;
+    overflow: hidden;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+
     height: 24px;
-    padding: 15px 10px 8px 10px;
+    padding: 15px 12px 8px 10px;
 
     img {
       height: 100%;
@@ -99,8 +111,9 @@ const userMenus = loginStore.userMenus
     }
     .title {
       color: white;
-      font-size: 24px;
+      font-size: 18px;
       font-weight: normal;
+      white-space: nowrap;
     }
   }
 
