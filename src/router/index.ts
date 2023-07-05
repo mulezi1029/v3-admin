@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { isLogin } from '@/global/isLogin'
-
+import { firstMenuItem } from '@/utils/mapMenus'
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -20,11 +20,6 @@ const router = createRouter({
       component: import('@/views/main/main.vue')
     },
     {
-      path: '/text',
-      name: 'text',
-      component: import('@/views/text/test.vue')
-    },
-    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: import('@/views/error/notFound.vue')
@@ -32,8 +27,12 @@ const router = createRouter({
   ]
 })
 
-// 路由导航守卫：路由跳转前进行判断是否已经登陆：本地是否已有token
+// 路由导航守卫
 router.beforeEach((to) => {
-  return isLogin(to)
+  // 登陆鉴权，未登陆导航到登陆页面
+  if (isLogin(to)) return isLogin(to)
+
+  // 登陆后默认显示的页面---登陆后默认显示匹配到的第一个菜单页面
+  if (to.path === '/main') return firstMenuItem?.url
 })
 export default router

@@ -6,16 +6,10 @@
       </el-icon>
     </div>
     <div class="content">
-      <!-- 面包屑 -->
-      <div class="breadcrubs">
-        <el-breadcrumb separator-icon="ArrowRight">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">管理</a></el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <!-- 个人信息 -->
-      <header-info />
+      <header-crumbs />
     </div>
+    <!-- 个人信息 -->
+    <header-info />
   </div>
 </template>
 

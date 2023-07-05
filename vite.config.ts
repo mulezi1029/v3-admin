@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     hmr: true,
     port: 8080,
-    open: '/login',
+    open: true,
     cors: true //开发服务器下允许跨域
   },
   plugins: [

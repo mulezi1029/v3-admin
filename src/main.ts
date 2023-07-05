@@ -17,8 +17,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 
-app.use(router)
 app.use(pinia)
+app.use(router)
 
 // app.use(ElementPlus) //注册后，就可以在任何地方使用组件库的组件了
 

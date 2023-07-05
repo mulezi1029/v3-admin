@@ -9,7 +9,7 @@
     <!-- 菜单 -->
     <div class="menu">
       <el-menu
-        :default-active="userMenus[0].children[0].id"
+        :default-active="defaultActive"
         :collapse="collapse"
         background-color="#001529"
         text-color="#b7bdc3"
@@ -21,15 +21,16 @@
             <!-- 标题 -->
             <template #title>
               <el-icon>
-                <!-- 图标 -->
                 <component :is="item.icon.split('el-icon')[1]" />
               </el-icon>
               <span>{{ item.name }}</span>
             </template>
 
             <!-- 子菜单项 -->
-            <template v-for="menu in item.children" :key="menu.id">
-              <el-menu-item :index="menu.id">{{ menu.name }}</el-menu-item>
+            <template v-for="subItem in item.children" :key="subItem.id">
+              <el-menu-item :index="subItem.id" @click="handleMenuItemClick(subItem)">
+                {{ subItem.name }}
+              </el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -79,6 +80,9 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/stores/login/login'
+import { mapPathToMenu } from '@/utils/mapMenus'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
   collapse: {
@@ -89,6 +93,18 @@ defineProps({
 
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
+
+const router = useRouter()
+const handleMenuItemClick = (subItem: any) => {
+  router.push(subItem.url)
+}
+
+// 菜单栏与页面匹配：显示什么页面，对应的菜单就是active
+const currentRoute = useRoute()
+const defaultActive = computed(() => {
+  const curMenu = mapPathToMenu(currentRoute.path, userMenus)
+  return curMenu.id
+})
 </script>
 
 <style scoped lang="less">

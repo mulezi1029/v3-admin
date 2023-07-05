@@ -11,7 +11,9 @@
           <mian-header @fold-change="handleFoldChange"></mian-header>
         </el-header>
 
-        <el-main class="el-main">Main</el-main>
+        <el-main class="el-main">
+          <router-view />
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -47,7 +49,7 @@ const handleFoldChange = (flag: boolean) => {
       // background-color: aquamarine;
     }
     .el-main {
-      background-color: bisque;
+      background-color: #f0f2f5;
     }
   }
 }
